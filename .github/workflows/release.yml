@@ -42,6 +42,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: package.zip
+          path: /dist
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -50,7 +51,7 @@ jobs:
         id: publish
         with:
           token: ${{ steps.load_secrets.outputs.TS_TOKEN }}
-          file: ${{ github.workspace }}/package.zip
+          file: package.zip
           namespace: "object_Object"
           name: "ObjectsModlist"
           description: "A modlist for my dedicated server."
