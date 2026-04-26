@@ -47,7 +47,7 @@ jobs:
         id: publish
         with:
           token: ${{ steps.load_secrets.outputs.TS_TOKEN }}
-          file: package.zip
+          file: ${{ github.workspace }}/package.zip
           namespace: "object_Object"
           name: "ObjectsModlist"
           description: "A modlist for my dedicated server."
