@@ -1,7 +1,7 @@
 {
   "name": "ObjectsModlist",
   "description": "A modlist for my dedicated server.",
-  "version_number": "0.1.0",
+  "version_number": "0.2.0",
   "dependencies": [
     "Advize-Armoire-1.1.4",
     "Advize-PlantEasily-2.1.1",
