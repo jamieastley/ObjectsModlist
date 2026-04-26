@@ -6,10 +6,9 @@ on:
       - v[0-9]+.[0-9]+.[0-9]*
 
 jobs:
-  setup_package:
+  publish_thunderstore:
+    name: Publish to Thunderstore
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.value }}
     steps:
       - uses: actions/checkout@v6
 
@@ -17,20 +16,6 @@ jobs:
         id: version
         run: echo "value=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
-      - name: Package mod
-        run: zip package.zip icon.jpg CHANGELOG.md manifest.json
-
-      - name: Upload package
-        uses: actions/upload-artifact@v7
-        with:
-          name: package.zip
-          path: package.zip
-
-  publish_thunderstore:
-    name: Publish to Thunderstore
-    runs-on: ubuntu-latest
-    needs: setup_package
-    steps:
       - name: Load secret
         id: load_secrets
         uses: 1password/load-secrets-action@v4
@@ -38,24 +23,14 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           TS_TOKEN: "op://Deployment/Thunderstore - object_Object/credential"
 
-      - name: Download package
-        uses: actions/download-artifact@v8
-        with:
-          name: package.zip
-          path: /dist
-
-      - name: Display structure of downloaded files
-        run: ls -R
-
       - uses: dhkatz/thunderstore-publish@v1.0.1
         id: publish
         with:
           token: ${{ steps.load_secrets.outputs.TS_TOKEN }}
-          file: package.zip
           namespace: "object_Object"
           name: "ObjectsModlist"
           description: "A modlist for my dedicated server."
-          version: ${{ needs.setup_package.outputs.version }}
+          version: ${{ steps.version.outputs.value }}
           communities: "Valheim"
           categories: |
             Modpacks
