@@ -23,7 +23,7 @@ jobs:
       - name: Upload package
         uses: actions/upload-artifact@v7
         with:
-          name: package
+          name: package.zip
           path: package.zip
 
   publish_thunderstore:
@@ -41,7 +41,10 @@ jobs:
       - name: Download package
         uses: actions/download-artifact@v8
         with:
-          name: package
+          name: package.zip
+
+      - name: Display structure of downloaded files
+        run: ls -R
 
       - uses: dhkatz/thunderstore-publish@v1.0.1
         id: publish
