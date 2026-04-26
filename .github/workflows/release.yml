@@ -43,7 +43,7 @@ jobs:
         with:
           name: package
 
-      - uses: dhkatz/thunderstore-publish@v1
+      - uses: dhkatz/thunderstore-publish@v1.0.1
         id: publish
         with:
           token: ${{ steps.load_secrets.outputs.TS_TOKEN }}
