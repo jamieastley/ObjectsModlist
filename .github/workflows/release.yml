@@ -51,7 +51,7 @@ jobs:
           namespace: "object_Object"
           name: "ObjectsModlist"
           description: "A modlist for my dedicated server."
-          version: ${{ jobs.setup_package.steps.version.outputs.value }}
+          version: ${{ needs.setup_package.outputs.version }}
           communities: "Valheim"
           categories: |
             Modpacks
